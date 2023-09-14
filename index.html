@@ -1,0 +1,1080 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let r;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",r=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){let n=e[t];Object.defineProperty(e,t,{get:()=>n||function(){},set(r){e["rocket"+t]=n=r}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,r=document.createRange(),i=n.parentElement;let o=e.get(n);void 0===o&&(o=n.nextSibling,e.set(n,o));const a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),i.insertBefore(a,o)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();</script>
+	
+		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v20.10 (Yoast SEO v20.10) - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Início iGreen Energy Licenciado - iGreen Energy</title><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7COpen%20Sans%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CInter%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7COpen%20Sans%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CInter%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&amp;display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7COpen%20Sans%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CInter%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&amp;display=swap"></noscript>
+	<link rel="canonical" href="https://licenciadoigreen.com/">
+	<meta property="og:locale" content="pt_BR">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Início iGreen Energy Licenciado">
+	<meta property="og:description" content="SEJA UM LICENCIADO NO SETOR DE SUSTENTABILIDADE SEJA UM LICENCIADO NO SETOR DE SUSTENTABILIDADE Saiba Como Você Também Pode Obter UmaNova Fonte de Renda Empreendendo EmTempo Parcial Com Baixo Investimento Saiba Como Você Também Pode Obter uma Nova Fonte de Renda Empreendendo Em Tempo Parcial Com Baixo Investimento Descubra Como No Vídeo Abaixo Acessar Explicação […]">
+	<meta property="og:url" content="https://licenciadoigreen.com/">
+	<meta property="og:site_name" content="iGreen Energy">
+	<meta property="article:publisher" content="https://www.facebook.com/licenciadoigreenoficial">
+	<meta property="article:modified_time" content="2023-09-11T19:00:10+00:00">
+	<meta property="og:image" content="images/WhatsApp-Image-2023-08-31-at-17.07.16-qbqkz3fjd43an2i4abljbhfbppfn36tehrkf7k9ihi.jpeg">
+	<meta name="twitter:card" content="summary_large_image">
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://licenciadoigreen.com/","url":"https://licenciadoigreen.com/","name":"Início iGreen Energy Licenciado - iGreen Energy","isPartOf":{"@id":"https://licenciadoigreen.com/#website"},"about":{"@id":"https://licenciadoigreen.com/#organization"},"primaryImageOfPage":{"@id":"https://licenciadoigreen.com/#primaryimage"},"image":{"@id":"https://licenciadoigreen.com/#primaryimage"},"thumbnailUrl":"https://licenciadoigreen.com/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2023-08-31-at-17.07.16-qbqkz3fjd43an2i4abljbhfbppfn36tehrkf7k9ihi.jpeg","datePublished":"2023-02-17T18:34:06+00:00","dateModified":"2023-09-11T19:00:10+00:00","breadcrumb":{"@id":"https://licenciadoigreen.com/#breadcrumb"},"inLanguage":"pt-BR","potentialAction":[{"@type":"ReadAction","target":["https://licenciadoigreen.com/"]}]},{"@type":"ImageObject","inLanguage":"pt-BR","@id":"https://licenciadoigreen.com/#primaryimage","url":"https://licenciadoigreen.com/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2023-08-31-at-17.07.16-qbqkz3fjd43an2i4abljbhfbppfn36tehrkf7k9ihi.jpeg","contentUrl":"https://licenciadoigreen.com/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2023-08-31-at-17.07.16-qbqkz3fjd43an2i4abljbhfbppfn36tehrkf7k9ihi.jpeg"},{"@type":"BreadcrumbList","@id":"https://licenciadoigreen.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]},{"@type":"WebSite","@id":"https://licenciadoigreen.com/#website","url":"https://licenciadoigreen.com/","name":"iGreen Energy","description":"Sustentabilidade, Praticidade e Economia","publisher":{"@id":"https://licenciadoigreen.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://licenciadoigreen.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"pt-BR"},{"@type":"Organization","@id":"https://licenciadoigreen.com/#organization","name":"iGreen Energy","url":"https://licenciadoigreen.com/","logo":{"@type":"ImageObject","inLanguage":"pt-BR","@id":"https://licenciadoigreen.com/#/schema/logo/image/","url":"https://licenciadoigreen.com/wp-content/uploads/2022/11/cropped-c172b4_8a36699a90954406baa795ca1db6cbeb_mv2.png","contentUrl":"https://licenciadoigreen.com/wp-content/uploads/2022/11/cropped-c172b4_8a36699a90954406baa795ca1db6cbeb_mv2.png","width":512,"height":512,"caption":"iGreen Energy"},"image":{"@id":"https://licenciadoigreen.com/#/schema/logo/image/"},"sameAs":["https://www.facebook.com/licenciadoigreenoficial"]}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<script type="rocketlazyloadscript" data-rocket-type="application/javascript">console.log('PixelYourSite PRO version 8.6.6');</script>
+<link href="https://fonts.gstatic.com" crossorigin rel="preconnect">
+<link rel="alternate" type="application/rss+xml" title="Feed para iGreen Energy »" href="https://licenciadoigreen.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Feed de comentários para iGreen Energy »" href="https://licenciadoigreen.com/comments/feed/">
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">console.log('PixelYourSite Pinterest version 3.1.3');</script>
+<style>
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link data-minify="1" rel="stylesheet" id="ht_ctc_main_css-css" href="css/main.css" media="all">
+<link rel="stylesheet" id="wp-block-library-css" href="css/style.min_1.css" media="all">
+<style id="classic-theme-styles-inline-css">
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id="global-styles-inline-css">
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}body .is-layout-grid{display: grid;}body .is-layout-grid > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel="stylesheet" id="hello-elementor-css" href="css/style.min.css" media="all">
+<link rel="stylesheet" id="hello-elementor-theme-style-css" href="css/theme.min.css" media="all">
+<link rel="stylesheet" id="elementor-frontend-css" href="css/frontend-lite.min_1.css" media="all">
+<link data-minify="1" rel="stylesheet" id="elementor-post-4-css" href="css/post-4.css" media="all">
+<link data-minify="1" rel="stylesheet" id="elementor-icons-css" href="css/elementor-icons.min.css" media="all">
+<link rel="stylesheet" id="swiper-css" href="css/swiper.min.css" media="all">
+<link rel="stylesheet" id="elementor-pro-css" href="css/frontend-lite.min.css" media="all">
+<link data-minify="1" rel="stylesheet" id="elementor-global-css" href="css/global.css" media="all">
+<link data-minify="1" rel="stylesheet" id="elementor-post-1410-css" href="css/post-1410.css" media="all">
+<link data-minify="1" rel="stylesheet" id="elementor-post-2273-css" href="css/post-2273.css" media="all">
+<link rel="stylesheet" id="hello-elementor-child-style-css" href="css/style.css" media="all">
+<link rel="stylesheet" id="eael-general-css" href="css/general.min.css" media="all">
+<link rel="stylesheet" id="mediaelement-css" href="css/mediaelementplayer-legacy.min.css" media="all">
+<link rel="stylesheet" id="wp-mediaelement-css" href="css/wp-mediaelement.min.css" media="all">
+
+<link rel="stylesheet" id="elementor-icons-shared-0-css" href="css/fontawesome.min.css" media="all">
+<link data-minify="1" rel="stylesheet" id="elementor-icons-fa-regular-css" href="css/regular.min.css" media="all">
+<link data-minify="1" rel="stylesheet" id="elementor-icons-fa-solid-css" href="css/solid.min.css" media="all">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><script type="rocketlazyloadscript" src="js/jquery.min.js" id="jquery-core-js" defer></script>
+<script type="rocketlazyloadscript" src="js/jquery-migrate.min.js" id="jquery-migrate-js" defer></script>
+<script type="rocketlazyloadscript" src="js/js.cookie-2.1.3.min.js" id="js-cookie-js" defer></script>
+<script type="rocketlazyloadscript" src="js/jquery.bind-first-0.2.3.min.js" id="jquery-bind-first-js" defer></script>
+<script id="pys-js-extra">
+var pysOptions = {"staticEvents":{"facebook":{"init_event":[{"delay":0,"type":"static","name":"PageView","eventID":"ed55c8d8-61d8-4bf8-b705-a81671cbaf6d","pixelIds":["619712493103691"],"params":{"page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"init_event","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""}]}},"dynamicEvents":{"signal_click":{"facebook":{"delay":0,"type":"dyn","name":"Signal","eventID":"61aa0952-6fae-4e60-8e2c-902b81a976be","pixelIds":["619712493103691"],"params":{"page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_click","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"Signal","trackingIds":["G-DBPE96M6BC"],"params":{"non_interaction":false,"page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_click","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"pinterest":{"delay":0,"type":"dyn","name":"Signal","params":{"page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_click","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"signal_watch_video":{"facebook":{"delay":0,"type":"dyn","name":"Signal","eventID":"98ce6c6b-370b-4393-bdfa-4fcd97e455c0","pixelIds":["619712493103691"],"params":{"event_action":"Video","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_watch_video","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"Signal","trackingIds":["G-DBPE96M6BC"],"params":{"event_action":"Video","non_interaction":false,"page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_watch_video","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"pinterest":{"delay":0,"type":"dyn","name":"Signal","params":{"event_action":"Video","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_watch_video","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"Signal","conversion_ids":["AW-11267498206","AW-10982124089"],"params":{"event_action":"Video","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_watch_video","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"signal_adsense":{"facebook":{"delay":0,"type":"dyn","name":"Signal","eventID":"81e02d1d-21f5-457c-9579-dd260c7e2c7a","pixelIds":["619712493103691"],"params":{"event_action":"Adsense","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_adsense","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"pinterest":{"delay":0,"type":"dyn","name":"Signal","params":{"event_action":"Adsense","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_adsense","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"signal_tel":{"facebook":{"delay":0,"type":"dyn","name":"Signal","eventID":"f0341e2b-b3ce-49c6-bf8c-65e34ed39cee","pixelIds":["619712493103691"],"params":{"event_action":"Tel","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_tel","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"Signal","trackingIds":["G-DBPE96M6BC"],"params":{"event_action":"Tel","non_interaction":false,"page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_tel","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"pinterest":{"delay":0,"type":"dyn","name":"Signal","params":{"event_action":"Tel","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_tel","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"Signal","conversion_ids":["AW-11267498206","AW-10982124089"],"params":{"event_action":"Tel","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_tel","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"signal_email":{"facebook":{"delay":0,"type":"dyn","name":"Signal","eventID":"8e0564fb-83b9-4efb-b4e1-258708523850","pixelIds":["619712493103691"],"params":{"event_action":"Email","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_email","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"Signal","trackingIds":["G-DBPE96M6BC"],"params":{"event_action":"Email","non_interaction":false,"page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_email","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"pinterest":{"delay":0,"type":"dyn","name":"Signal","params":{"event_action":"Email","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_email","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"Signal","conversion_ids":["AW-11267498206","AW-10982124089"],"params":{"event_action":"Email","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_email","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"signal_form":{"facebook":{"delay":0,"type":"dyn","name":"Signal","eventID":"baca6bdb-9365-4b0d-b42d-c2dcf5810c25","pixelIds":["619712493103691"],"params":{"event_action":"Form","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_form","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"Signal","trackingIds":["G-DBPE96M6BC"],"params":{"event_action":"Form","non_interaction":false,"page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_form","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"pinterest":{"delay":0,"type":"dyn","name":"Signal","params":{"event_action":"Form","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_form","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"Signal","conversion_ids":["AW-11267498206","AW-10982124089"],"params":{"event_action":"Form","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_form","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"signal_download":{"facebook":{"delay":0,"type":"dyn","name":"Signal","extensions":["","doc","exe","js","pdf","ppt","tgz","zip","xls"],"eventID":"66606bbb-141f-422c-a15f-a93fd73275f4","pixelIds":["619712493103691"],"params":{"event_action":"Download","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_download","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"Signal","extensions":["","doc","exe","js","pdf","ppt","tgz","zip","xls"],"trackingIds":["G-DBPE96M6BC"],"params":{"event_action":"Download","non_interaction":false,"page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_download","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"pinterest":{"delay":0,"type":"dyn","name":"Signal","extensions":["","doc","exe","js","pdf","ppt","tgz","zip","xls"],"params":{"event_action":"Download","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_download","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"Signal","extensions":["","doc","exe","js","pdf","ppt","tgz","zip","xls"],"conversion_ids":["AW-11267498206","AW-10982124089"],"params":{"event_action":"Download","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_download","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"signal_comment":{"facebook":{"delay":0,"type":"dyn","name":"Signal","eventID":"d8069bd5-115f-4758-8916-1d4752f62d97","pixelIds":["619712493103691"],"params":{"event_action":"Comment","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_comment","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"Signal","trackingIds":["G-DBPE96M6BC"],"params":{"event_action":"Comment","non_interaction":false,"page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_comment","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"pinterest":{"delay":0,"type":"dyn","name":"Signal","params":{"event_action":"Comment","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_comment","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"Signal","conversion_ids":["AW-11267498206","AW-10982124089"],"params":{"event_action":"Comment","page_title":"In\u00edcio iGreen Energy Licenciado","post_type":"page","post_id":1410,"plugin":"PixelYourSite","event_url":"licenciadoigreen.com\/","user_role":"guest"},"e_id":"signal_comment","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}}},"triggerEvents":[],"triggerEventTypes":[],"facebook":{"pixelIds":["619712493103691"],"advancedMatching":[],"removeMetadata":false,"wooVariableAsSimple":false,"serverApiEnabled":true,"ajaxForServerEvent":true,"wooCRSendFromServer":false,"send_external_id":true},"ga":{"trackingIds":["G-DBPE96M6BC"],"enhanceLinkAttr":false,"anonimizeIP":false,"retargetingLogic":"ecomm","crossDomainEnabled":false,"crossDomainAcceptIncoming":false,"crossDomainDomains":[],"wooVariableAsSimple":true,"isDebugEnabled":[],"disableAdvertisingFeatures":false,"disableAdvertisingPersonalization":false},"google_ads":{"conversion_ids":["AW-11267498206","AW-10982124089"],"wooVariableAsSimple":false},"pinterest":{"pixelIds":["2612607051967"],"advancedMatching":[],"contentParams":{"post_type":"page","post_id":1410,"name":"In\u00edcio iGreen Energy Licenciado"},"wooVariableAsSimple":false},"debug":"","siteUrl":"https:\/\/licenciadoigreen.com","ajaxUrl":"https:\/\/licenciadoigreen.com\/wp-admin\/admin-ajax.php","trackUTMs":"1","trackTrafficSource":"1","user_id":"0","enable_lading_page_param":"1","cookie_duration":"7","signal_watch_video_enabled":"1","enable_event_day_param":"1","enable_event_month_param":"1","enable_event_time_param":"1","enable_remove_target_url_param":"1","enable_remove_download_url_param":"1","gdpr":{"ajax_enabled":false,"all_disabled_by_api":false,"facebook_disabled_by_api":false,"tiktok_disabled_by_api":false,"analytics_disabled_by_api":false,"google_ads_disabled_by_api":false,"pinterest_disabled_by_api":false,"bing_disabled_by_api":false,"facebook_prior_consent_enabled":true,"tiktok_prior_consent_enabled":true,"analytics_prior_consent_enabled":true,"google_ads_prior_consent_enabled":true,"pinterest_prior_consent_enabled":true,"bing_prior_consent_enabled":true,"cookiebot_integration_enabled":false,"cookiebot_facebook_consent_category":"marketing","cookiebot_analytics_consent_category":"statistics","cookiebot_google_ads_consent_category":"marketing","cookiebot_pinterest_consent_category":"marketing","cookiebot_bing_consent_category":"marketing","cookie_notice_integration_enabled":false,"cookie_law_info_integration_enabled":false,"real_cookie_banner_integration_enabled":false,"consent_magic_integration_enabled":false},"edd":{"enabled":false},"woo":{"enabled":false}};
+</script>
+<script type="rocketlazyloadscript" data-minify="1" src="js/public.js" id="pys-js" defer></script>
+<script type="rocketlazyloadscript" data-minify="1" src="js/public_2.js" id="pys-pinterest-js" defer></script>
+<script type="rocketlazyloadscript" data-minify="1" src="js/public_1.js" id="pys_sp_public_js-js" defer></script>
+<script type="rocketlazyloadscript" src="js/vimeo.min.js" id="vimeo-js" defer></script>
+<link rel="https://api.w.org/" href="https://licenciadoigreen.com/wp-json/"><link rel="alternate" type="application/json" href="https://licenciadoigreen.com/wp-json/wp/v2/pages/1410"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://licenciadoigreen.com/xmlrpc.php?rsd">
+<meta name="generator" content="WordPress 6.3.1">
+<link rel="shortlink" href="https://licenciadoigreen.com/">
+<link rel="alternate" type="application/json+oembed" href="https://licenciadoigreen.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Flicenciadoigreen.com%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://licenciadoigreen.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Flicenciadoigreen.com%2F&format=xml">
+<meta name="generator" content="Elementor 3.13.4; features: e_dom_optimization, e_optimized_assets_loading, e_optimized_css_loading, a11y_improvements, additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-auto">
+<!-- Google Tag Manager -->
+<script type="rocketlazyloadscript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MBCLJKB');</script>
+<!-- End Google Tag Manager -->
+<meta name="p:domain_verify" content="ff79b929e3c6c194a0c5754656bbbced"><link rel="icon" href="images/cropped-c172b4_8a36699a90954406baa795ca1db6cbeb_mv2-32x32.png" sizes="32x32">
+<link rel="icon" href="images/cropped-c172b4_8a36699a90954406baa795ca1db6cbeb_mv2-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="images/cropped-c172b4_8a36699a90954406baa795ca1db6cbeb_mv2-180x180.png">
+<meta name="msapplication-TileImage" content="https://licenciadoigreen.com/wp-content/uploads/2022/11/cropped-c172b4_8a36699a90954406baa795ca1db6cbeb_mv2-270x270.png">
+<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"></head>
+<body data-rsssl="1" class="home page-template-default page page-id-1410 elementor-default elementor-template-canvas elementor-kit-4 elementor-page elementor-page-1410">
+	<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MBCLJKB" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+		<div data-elementor-type="wp-page" data-elementor-id="1410" class="elementor elementor-1410">
+									<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-6f09d77 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="6f09d77" data-element_type="section" data-settings="{" background_background":"classic"}">
+							<div class="elementor-background-overlay"></div>
+							<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-d7c9fd2" data-id="d7c9fd2" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-6f7c81a elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-heading" data-id="6f7c81a" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.13.3 - 28-05-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h2 class="elementor-heading-title elementor-size-default"><a href="https://api.whatsapp.com/send?phone=5533999285258&text=Ol%C3%A1%20quero%20saber%20com%20ter%20uma%20renda%20extra%20com%20energia%20solar."><b>SEJA UM LICENCIADO</b><br>
+<span style="font-size:16px">NO SETOR DE SUSTENTABILIDADE</span></a></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-625983b elementor-hidden-desktop elementor-widget elementor-widget-heading" data-id="625983b" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default"><a href="https://api.whatsapp.com/send?phone=5533999285258&text=Ol%C3%A1%20quero%20saber%20com%20ter%20uma%20renda%20extra%20com%20energia%20solar."><b>SEJA UM LICENCIADO</b><br>
+<span style="font-size:12px">NO SETOR DE SUSTENTABILIDADE</span></a></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-0386441 elementor-widget elementor-widget-spacer" data-id="0386441" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.13.3 - 28-05-2023 */
+.elementor-column .elementor-spacer-inner{height:var(--spacer-size)}.e-con{--container-widget-width:100%}.e-con-inner>.elementor-widget-spacer,.e-con>.elementor-widget-spacer{width:var(--container-widget-width,var(--spacer-size));--align-self:var(--container-widget-align-self,initial);--flex-shrink:0}.e-con-inner>.elementor-widget-spacer>.elementor-widget-container,.e-con-inner>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer,.e-con>.elementor-widget-spacer>.elementor-widget-container,.e-con>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer{height:100%}.e-con-inner>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer>.elementor-spacer-inner,.e-con>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer>.elementor-spacer-inner{height:var(--container-widget-height,var(--spacer-size))}</style>		<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-8eda0dd elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-heading" data-id="8eda0dd" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Saiba Como <strong><span style="color:#FFDE00;text-shadow:#000000 0px 0px 10px">Você</span> Também Pode</strong> Obter Uma<br><strong><span style="color:#FFDE00;text-shadow:#000000 0px 0px 10px">Nova Fonte de Renda</span></strong> Empreendendo Em<br><strong><span style="color:#FFDE00;text-shadow:#000000 0px 0px 10px">Tempo Parcial</span></strong> Com <strong><span style="color:#FFDE00;text-shadow:#000000 0px 0px 10px">Baixo Investimento</span></strong></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-2276a75 elementor-hidden-desktop elementor-widget elementor-widget-heading" data-id="2276a75" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Saiba Como <strong><span style="color:#FFDE00;text-shadow:#000000 0px 0px 10px">Você</span> Também Pode</strong> Obter uma <strong><span style="color:#FFDE00;text-shadow:#000000 0px 0px 10px">Nova Fonte de Renda</span></strong> Empreendendo Em <strong><span style="color:#FFDE00;text-shadow:#000000 0px 0px 10px">Tempo Parcial</span></strong> Com <strong><span style="color:#FFDE00;text-shadow:#000000 0px 0px 10px">Baixo Investimento</span></strong></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-2528cd1 elementor-widget elementor-widget-spacer" data-id="2528cd1" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-a90f935 elementor-widget elementor-widget-image" data-id="a90f935" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.13.3 - 28-05-2023 */
+.elementor-widget-image{text-align:center}.elementor-widget-image a{display:inline-block}.elementor-widget-image a img[src$=".svg"]{width:48px}.elementor-widget-image img{vertical-align:middle;display:inline-block}</style>												<img width="540" height="175" decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20viewBox=&#x27;0%200%20540%20175&#x27;%3E%3C/svg%3E" title="WhatsApp Image 2023-08-31 at 17.07.16" alt="WhatsApp Image 2023-08-31 at 17.07.16" loading="lazy" data-lazy-src="https://licenciadoigreen.com/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2023-08-31-at-17.07.16-qbqkz3fjd43an2i4abljbhfbppfn36tehrkf7k9ihi.jpeg"><noscript><img width="540" height="175" decoding="async" src="images/WhatsApp-Image-2023-08-31-at-17.07.16-qbqkz3fjd43an2i4abljbhfbppfn36tehrkf7k9ihi.jpeg" title="WhatsApp Image 2023-08-31 at 17.07.16" alt="WhatsApp Image 2023-08-31 at 17.07.16" loading="lazy"></noscript>															</div>
+				</div>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-f34cbcf elementor-hidden-desktop elementor-hidden-tablet elementor-hidden-mobile elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="f34cbcf" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-317d24d" data-id="317d24d" data-element_type="column">
+			<div class="elementor-widget-wrap">
+									</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-e0bcd04" data-id="e0bcd04" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-08965bb elementor-align-center elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="08965bb" data-element_type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+			<link rel="stylesheet" href="css/widget-icon-list.min.css">		<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="far fa-play-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Descubra Como No Vídeo Abaixo</span>
+									</li>
+						</ul>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-fe9da22 elementor-widget elementor-widget-video" data-id="fe9da22" data-element_type="widget" data-settings="{" youtube_url":"https:\ \ youtu.be\ aqCGos1ngXc","show_image_overlay":"yes","image_overlay":{"url":"https:\ licenciadoigreen.com\ wp-content\ uploads\ 2023\ 02\ WhatsApp-Image-2023-02-19-at-21.36.12-2.jpeg","id":1462,"size":"","alt":"","source":"library"},"video_type":"youtube","controls":"yes"}" data-widget_type="video.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.13.3 - 28-05-2023 */
+.elementor-widget-video .elementor-widget-container{overflow:hidden;transform:translateZ(0)}.elementor-widget-video .elementor-wrapper{aspect-ratio:var(--video-aspect-ratio)}.elementor-widget-video .elementor-wrapper iframe,.elementor-widget-video .elementor-wrapper video{height:100%;width:100%;display:flex;border:none;background-color:#000}@supports not (aspect-ratio:1/1){.elementor-widget-video .elementor-wrapper{position:relative;overflow:hidden;height:0;padding-bottom:calc(100% / var(--video-aspect-ratio))}.elementor-widget-video .elementor-wrapper iframe,.elementor-widget-video .elementor-wrapper video{position:absolute;top:0;right:0;bottom:0;left:0}}.elementor-widget-video .elementor-open-inline .elementor-custom-embed-image-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background-size:cover;background-position:50%}.elementor-widget-video .elementor-custom-embed-image-overlay{cursor:pointer;text-align:center}.elementor-widget-video .elementor-custom-embed-image-overlay:hover .elementor-custom-embed-play i{opacity:1}.elementor-widget-video .elementor-custom-embed-image-overlay img{display:block;width:100%}.elementor-widget-video .e-hosted-video .elementor-video{-o-object-fit:cover;object-fit:cover}.e-con-inner>.elementor-widget-video,.e-con>.elementor-widget-video{width:var(--container-widget-width);--flex-grow:var(--container-widget-flex-grow)}</style>		<div class="elementor-wrapper elementor-open-inline">
+			<div class="elementor-video"></div>				<div data-bg="https://licenciadoigreen.com/wp-content/uploads/2023/02/WhatsApp-Image-2023-02-19-at-21.36.12-2.jpeg" class="elementor-custom-embed-image-overlay rocket-lazyload" style>
+																<div class="elementor-custom-embed-play" role="button" aria-label="Reproduzir vídeo" tabindex="0">
+							<i aria-hidden="true" class="eicon-play"></i>							<span class="elementor-screen-only">Reproduzir vídeo</span>
+						</div>
+									</div>
+					</div>
+				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-28bbc5b" data-id="28bbc5b" data-element_type="column">
+			<div class="elementor-widget-wrap">
+									</div>
+		</div>
+							</div>
+		</section>
+				<div class="elementor-element elementor-element-87100ca elementor-widget elementor-widget-spacer" data-id="87100ca" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-e937228 elementor-align-center elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-button" data-id="e937228" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-button-wrapper">
+			<a href="https://api.whatsapp.com/send?phone=5533999285258&text=Ol%C3%A1%20quero%20saber%20com%20ter%20uma%20renda%20extra%20com%20energia%20solar." class="elementor-button-link elementor-button elementor-size-lg elementor-animation-grow" role="button">
+						<span class="elementor-button-content-wrapper">
+							<span class="elementor-button-icon elementor-align-icon-right">
+				<i aria-hidden="true" class="far fa-play-circle"></i>			</span>
+						<span class="elementor-button-text">Acessar Explicação Completa</span>
+		</span>
+					</a>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-3182c0b elementor-align-center elementor-hidden-desktop elementor-widget elementor-widget-button" data-id="3182c0b" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-button-wrapper">
+			<a href="https://api.whatsapp.com/send?phone=5533999285258&text=Ol%C3%A1%20quero%20saber%20com%20ter%20uma%20renda%20extra%20com%20energia%20solar." class="elementor-button-link elementor-button elementor-size-xs elementor-animation-grow" role="button">
+						<span class="elementor-button-content-wrapper">
+							<span class="elementor-button-icon elementor-align-icon-right">
+				<i aria-hidden="true" class="far fa-play-circle"></i>			</span>
+						<span class="elementor-button-text">Acessar Explicação Completa</span>
+		</span>
+					</a>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-94722a9 elementor-widget elementor-widget-spacer" data-id="94722a9" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-a3693e0 elementor-widget elementor-widget-heading" data-id="a3693e0" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default"><a href="https://api.whatsapp.com/send?phone=5533999285258&text=Ol%C3%A1%20quero%20saber%20com%20ter%20uma%20renda%20extra%20com%20energia%20solar.">Clique Aqui e Acesse a Explicação</a></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-76fc068 elementor-widget elementor-widget-spacer" data-id="76fc068" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-0e760bb elementor-view-default elementor-widget elementor-widget-icon" data-id="0e760bb" data-element_type="widget" data-widget_type="icon.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-icon-wrapper">
+			<a class="elementor-icon" href="#oportunidade">
+			<i aria-hidden="true" class="fas fa-angle-double-down"></i>			</a>
+		</div>
+				</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-c7a2cdd elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="c7a2cdd" data-element_type="section" id="oportunidade" data-settings="{" background_background":"gradient"}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-4439080" data-id="4439080" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-d85a34f elementor-widget elementor-widget-spacer" data-id="d85a34f" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-3721bd4 elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-heading" data-id="3721bd4" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Uma Nova <strong><span style="color:#E05F00;text-shadow:#E67826 0px 0px 2px">Oportunidade</span></strong> Para Quem Quer <strong><span style="color:#E05F00;text-shadow:#E67826 0px 0px 2px">Prosperar</span></strong>
+</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-57ef086 elementor-hidden-desktop elementor-widget elementor-widget-heading" data-id="57ef086" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Uma Nova <strong> <span style="color:#E05F00;text-shadow:#E67826 0px 0px 2px">Oportunidade</span></strong><br>Para Quem Quer <strong> <span style="color:#E05F00;text-shadow:#E67826 0px 0px 2px">Prosperar</span></strong></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-5e1275c elementor-widget elementor-widget-spacer" data-id="5e1275c" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-23368ae elementor-hidden-tablet elementor-hidden-mobile elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="23368ae" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-3d5be2f" data-id="3d5be2f" data-element_type="column" data-settings="{" background_background":"classic"}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-8397894 elementor-widget elementor-widget-heading" data-id="8397894" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Demais Empreendedores</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-2aa0cf5 elementor-widget elementor-widget-spacer" data-id="2aa0cf5" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-23f5cc5 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="23f5cc5" data-element_type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+					<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-times-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Sem Autonomia</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-times-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Sem Experiência</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-times-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Altos Custos Burocráticos</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-times-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Instabilidade</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-times-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Risco é Maior</span>
+									</li>
+						</ul>
+				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-2b380b7" data-id="2b380b7" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-5107c9b elementor-hidden-desktop elementor-widget elementor-widget-spacer" data-id="5107c9b" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-4cbe1b3" data-id="4cbe1b3" data-element_type="column" data-settings="{" background_background":"classic"}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-b1bf67e elementor-widget elementor-widget-heading" data-id="b1bf67e" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Licenciado de Sustentabilidade</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-3c9b73a elementor-widget elementor-widget-spacer" data-id="3c9b73a" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-5acddf4 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="5acddf4" data-element_type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+					<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Baixo Investimento</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Plano de Carreira</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Marca Consolidada</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Flexibilidade </span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Suporte e Treinamento</span>
+									</li>
+						</ul>
+				</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-aa9059e elementor-hidden-desktop elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="aa9059e" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-574a72d" data-id="574a72d" data-element_type="column" data-settings="{" background_background":"classic"}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-a6eee4b elementor-widget elementor-widget-heading" data-id="a6eee4b" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Demais Empreendedores</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-0b32e3f elementor-widget elementor-widget-spacer" data-id="0b32e3f" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-bc2ada2 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="bc2ada2" data-element_type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+					<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-times-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Sem Autonomia</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-times-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Sem Experiência</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-times-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Altos Custos Burocráticos</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-times-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Instabilidade</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-times-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Risco é Maior</span>
+									</li>
+						</ul>
+				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-e3cfa2a" data-id="e3cfa2a" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-7e25b84 elementor-hidden-desktop elementor-widget elementor-widget-spacer" data-id="7e25b84" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-e7d5ccf" data-id="e7d5ccf" data-element_type="column" data-settings="{" background_background":"classic"}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-54fc6b9 elementor-widget elementor-widget-heading" data-id="54fc6b9" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Licenciado de Sustentabilidade</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-05da436 elementor-widget elementor-widget-spacer" data-id="05da436" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-d334ff0 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="d334ff0" data-element_type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+					<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Baixo Investimento</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Plano de Carreira</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Marca Consolidada</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Flexibilidade </span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Suporte e Treinamento</span>
+									</li>
+						</ul>
+				</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+				<div class="elementor-element elementor-element-991cffc elementor-widget elementor-widget-spacer" data-id="991cffc" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-4e90527 elementor-align-center elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-button" data-id="4e90527" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-button-wrapper">
+			<a href="https://api.whatsapp.com/send?phone=5533999285258&text=Ol%C3%A1%20quero%20saber%20com%20ter%20uma%20renda%20extra%20com%20energia%20solar." class="elementor-button-link elementor-button elementor-size-lg elementor-animation-grow" role="button">
+						<span class="elementor-button-content-wrapper">
+							<span class="elementor-button-icon elementor-align-icon-right">
+				<i aria-hidden="true" class="far fa-play-circle"></i>			</span>
+						<span class="elementor-button-text">Acessar Explicação Completa</span>
+		</span>
+					</a>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-c1e54ef elementor-align-center elementor-hidden-desktop elementor-widget elementor-widget-button" data-id="c1e54ef" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-button-wrapper">
+			<a href="https://api.whatsapp.com/send?phone=5533999285258&text=Ol%C3%A1%20quero%20saber%20com%20ter%20uma%20renda%20extra%20com%20energia%20solar." class="elementor-button-link elementor-button elementor-size-xs elementor-animation-grow" role="button">
+						<span class="elementor-button-content-wrapper">
+							<span class="elementor-button-icon elementor-align-icon-right">
+				<i aria-hidden="true" class="far fa-play-circle"></i>			</span>
+						<span class="elementor-button-text">Acessar Explicação Completa</span>
+		</span>
+					</a>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-ad7707b elementor-widget elementor-widget-spacer" data-id="ad7707b" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-84e051b elementor-widget elementor-widget-heading" data-id="84e051b" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default"><a href="https://api.whatsapp.com/send?phone=5533999285258&text=Ol%C3%A1%20quero%20saber%20com%20ter%20uma%20renda%20extra%20com%20energia%20solar.">Clique Aqui e Acesse a Explicação</a></h2>		</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-2451f68 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="2451f68" data-element_type="section" data-settings="{" background_background":"classic"}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-cbe330d" data-id="cbe330d" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-538e897 elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-heading" data-id="538e897" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Confiada Pelas Principais Marcas</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-4ffc5b0 elementor-hidden-desktop elementor-widget elementor-widget-heading" data-id="4ffc5b0" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Confiada Pelas<br>Principais Marcas</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-c774d55 elementor-widget elementor-widget-spacer" data-id="c774d55" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-c6cc1a1 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="c6cc1a1" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-2165c6f" data-id="2165c6f" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-0cba631 elementor-widget elementor-widget-image" data-id="0cba631" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img decoding="async" width="212" height="212" src="data:image/svg+xml,%3Csvg%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20viewBox=&#x27;0%200%20212%20212&#x27;%3E%3C/svg%3E" class="attachment-full size-full wp-image-1482" alt data-lazy-srcset="https://licenciadoigreen.com/wp-content/uploads/2023/02/12.png 212w, https://licenciadoigreen.com/wp-content/uploads/2023/02/12-150x150.png 150w" data-lazy-sizes="(max-width: 212px) 100vw, 212px" data-lazy-src="https://licenciadoigreen.com/wp-content/uploads/2023/02/12.png"><noscript><img decoding="async" width="212" height="212" src="images/12.png" class="attachment-full size-full wp-image-1482" alt srcset="images/12.png 212w, images/12-150x150.png 150w" sizes="(max-width: 212px) 100vw, 212px"></noscript>															</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-8deb286" data-id="8deb286" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-5b22fef elementor-widget elementor-widget-image" data-id="5b22fef" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img decoding="async" width="212" height="212" src="data:image/svg+xml,%3Csvg%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20viewBox=&#x27;0%200%20212%20212&#x27;%3E%3C/svg%3E" class="attachment-full size-full wp-image-1484" alt data-lazy-srcset="https://licenciadoigreen.com/wp-content/uploads/2023/02/32.png 212w, https://licenciadoigreen.com/wp-content/uploads/2023/02/32-150x150.png 150w" data-lazy-sizes="(max-width: 212px) 100vw, 212px" data-lazy-src="https://licenciadoigreen.com/wp-content/uploads/2023/02/32.png"><noscript><img decoding="async" width="212" height="212" src="images/32.png" class="attachment-full size-full wp-image-1484" alt srcset="images/32.png 212w, images/32-150x150.png 150w" sizes="(max-width: 212px) 100vw, 212px"></noscript>															</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-a2158c0" data-id="a2158c0" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-56ed47b elementor-widget elementor-widget-image" data-id="56ed47b" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img decoding="async" width="212" height="212" src="data:image/svg+xml,%3Csvg%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20viewBox=&#x27;0%200%20212%20212&#x27;%3E%3C/svg%3E" class="attachment-full size-full wp-image-1483" alt data-lazy-srcset="https://licenciadoigreen.com/wp-content/uploads/2023/02/22.png 212w, https://licenciadoigreen.com/wp-content/uploads/2023/02/22-150x150.png 150w" data-lazy-sizes="(max-width: 212px) 100vw, 212px" data-lazy-src="https://licenciadoigreen.com/wp-content/uploads/2023/02/22.png"><noscript><img decoding="async" width="212" height="212" src="images/22.png" class="attachment-full size-full wp-image-1483" alt srcset="images/22.png 212w, images/22-150x150.png 150w" sizes="(max-width: 212px) 100vw, 212px"></noscript>															</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-dbd448d" data-id="dbd448d" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-084f5d8 elementor-widget elementor-widget-image" data-id="084f5d8" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img decoding="async" width="212" height="212" src="data:image/svg+xml,%3Csvg%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20viewBox=&#x27;0%200%20212%20212&#x27;%3E%3C/svg%3E" class="attachment-full size-full wp-image-1485" alt data-lazy-srcset="https://licenciadoigreen.com/wp-content/uploads/2023/02/41.png 212w, https://licenciadoigreen.com/wp-content/uploads/2023/02/41-150x150.png 150w" data-lazy-sizes="(max-width: 212px) 100vw, 212px" data-lazy-src="https://licenciadoigreen.com/wp-content/uploads/2023/02/41.png"><noscript><img decoding="async" width="212" height="212" src="images/41.png" class="attachment-full size-full wp-image-1485" alt srcset="images/41.png 212w, images/41-150x150.png 150w" sizes="(max-width: 212px) 100vw, 212px"></noscript>															</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+					</div>
+		</div>
+							</div>
+		</section>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-92f0543 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="92f0543" data-element_type="section" data-settings="{" background_background":"classic"}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-6e3c660" data-id="6e3c660" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-397c4d0 elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-heading" data-id="397c4d0" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Veja O Que <span style="color:#E05F00;text-shadow:#E67826 0px 0px 2px">Empreendedores Como
+Você</span> Falam<br>Sobre Ser um <span style="color:#E05F00;text-shadow:#E67826 0px 0px 2px">Licenciado de Sustentabilidade</span></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-8a0f313 elementor-hidden-desktop elementor-widget elementor-widget-heading" data-id="8a0f313" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Veja O Que <span style="color:#E05F00;text-shadow:#E67826 0px 0px 2px">Empreendedores Como Você</span> Falam Sobre Ser um <span style="color:#E05F00;text-shadow:#E67826 0px 0px 2px">Licenciado de Sustentabilidade</span></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-fdc7e70 elementor-widget elementor-widget-spacer" data-id="fdc7e70" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-4389239 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="4389239" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-9ba7ac5" data-id="9ba7ac5" data-element_type="column">
+			<div class="elementor-widget-wrap">
+									</div>
+		</div>
+				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-44ccaee" data-id="44ccaee" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-1f534ad elementor-widget elementor-widget-video" data-id="1f534ad" data-element_type="widget" data-settings="{" video_type":"hosted","show_image_overlay":"yes","image_overlay":{"url":"https:\ \ licenciadoigreen.com\ wp-content\ uploads\ 2023\ 02\ WhatsApp-Image-2023-02-19-at-21.36.12-4.jpeg","id":1460,"size":"","alt":"","source":"library"},"controls":"yes"}" data-widget_type="video.default">
+				<div class="elementor-widget-container">
+					<div class="e-hosted-video elementor-wrapper elementor-open-inline">
+					<video class="elementor-video" src="media/20221212_153359000_iOS.mp4" controls preload="metadata" controlslist="nodownload"></video>
+						<div data-bg="https://licenciadoigreen.com/wp-content/uploads/2023/02/WhatsApp-Image-2023-02-19-at-21.36.12-4.jpeg" class="elementor-custom-embed-image-overlay rocket-lazyload" style>
+																<div class="elementor-custom-embed-play" role="button" aria-label="Reproduzir vídeo" tabindex="0">
+							<i aria-hidden="true" class="eicon-play"></i>							<span class="elementor-screen-only">Reproduzir vídeo</span>
+						</div>
+									</div>
+					</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-e8f0550 elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-spacer" data-id="e8f0550" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-9091a39 elementor-widget elementor-widget-heading" data-id="9091a39" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Carlos</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-aa7b970 elementor-widget elementor-widget-heading" data-id="aa7b970" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Barbearia</h2>		</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-6e4f44b" data-id="6e4f44b" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-554d8b2 elementor-widget elementor-widget-video" data-id="554d8b2" data-element_type="widget" data-settings="{" video_type":"hosted","show_image_overlay":"yes","image_overlay":{"url":"https:\ \ licenciadoigreen.com\ wp-content\ uploads\ 2023\ 02\ WhatsApp-Image-2023-02-19-at-21.36.12-6.jpeg","id":1458,"size":"","alt":"","source":"library"},"controls":"yes"}" data-widget_type="video.default">
+				<div class="elementor-widget-container">
+					<div class="e-hosted-video elementor-wrapper elementor-open-inline">
+					<video class="elementor-video" src="media/20221205_175523000_iOS.mp4" controls preload="metadata" controlslist="nodownload"></video>
+						<div data-bg="https://licenciadoigreen.com/wp-content/uploads/2023/02/WhatsApp-Image-2023-02-19-at-21.36.12-6.jpeg" class="elementor-custom-embed-image-overlay rocket-lazyload" style>
+																<div class="elementor-custom-embed-play" role="button" aria-label="Reproduzir vídeo" tabindex="0">
+							<i aria-hidden="true" class="eicon-play"></i>							<span class="elementor-screen-only">Reproduzir vídeo</span>
+						</div>
+									</div>
+					</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-8163dac elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-spacer" data-id="8163dac" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-e1449f4 elementor-widget elementor-widget-heading" data-id="e1449f4" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Ariel</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-1a4a10b elementor-widget elementor-widget-heading" data-id="1a4a10b" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">FMF</h2>		</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-bf3b84a" data-id="bf3b84a" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-7f5a69c elementor-widget elementor-widget-video" data-id="7f5a69c" data-element_type="widget" data-settings="{" video_type":"hosted","show_image_overlay":"yes","image_overlay":{"url":"https:\ \ licenciadoigreen.com\ wp-content\ uploads\ 2023\ 02\ WhatsApp-Image-2023-02-19-at-21.36.12-5.jpeg","id":1459,"size":"","alt":"","source":"library"},"controls":"yes"}" data-widget_type="video.default">
+				<div class="elementor-widget-container">
+					<div class="e-hosted-video elementor-wrapper elementor-open-inline">
+					<video class="elementor-video" src="media/20221207_212729000_iOS.mp4" controls preload="metadata" controlslist="nodownload"></video>
+						<div data-bg="https://licenciadoigreen.com/wp-content/uploads/2023/02/WhatsApp-Image-2023-02-19-at-21.36.12-5.jpeg" class="elementor-custom-embed-image-overlay rocket-lazyload" style>
+																<div class="elementor-custom-embed-play" role="button" aria-label="Reproduzir vídeo" tabindex="0">
+							<i aria-hidden="true" class="eicon-play"></i>							<span class="elementor-screen-only">Reproduzir vídeo</span>
+						</div>
+									</div>
+					</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-0df50d2 elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-spacer" data-id="0df50d2" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-b126dd7 elementor-widget elementor-widget-heading" data-id="b126dd7" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Luiz</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-aadc441 elementor-widget elementor-widget-heading" data-id="aadc441" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Construtora</h2>		</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-4405a4a" data-id="4405a4a" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-8d3e353 elementor-widget elementor-widget-video" data-id="8d3e353" data-element_type="widget" data-settings="{" video_type":"hosted","show_image_overlay":"yes","image_overlay":{"url":"https:\ \ licenciadoigreen.com\ wp-content\ uploads\ 2023\ 02\ WhatsApp-Image-2023-02-19-at-21.36.12-3.jpeg","id":1461,"size":"","alt":"","source":"library"},"controls":"yes"}" data-widget_type="video.default">
+				<div class="elementor-widget-container">
+					<div class="e-hosted-video elementor-wrapper elementor-open-inline">
+					<video class="elementor-video" src="media/20221213_181926000_iOS.mp4" controls preload="metadata" controlslist="nodownload"></video>
+						<div data-bg="https://licenciadoigreen.com/wp-content/uploads/2023/02/WhatsApp-Image-2023-02-19-at-21.36.12-3.jpeg" class="elementor-custom-embed-image-overlay rocket-lazyload" style>
+																<div class="elementor-custom-embed-play" role="button" aria-label="Reproduzir vídeo" tabindex="0">
+							<i aria-hidden="true" class="eicon-play"></i>							<span class="elementor-screen-only">Reproduzir vídeo</span>
+						</div>
+									</div>
+					</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-97a2c4f elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-spacer" data-id="97a2c4f" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-3e9062d elementor-widget elementor-widget-heading" data-id="3e9062d" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Fernando</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-679df22 elementor-widget elementor-widget-heading" data-id="679df22" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Administração</h2>		</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-fcd36a4" data-id="fcd36a4" data-element_type="column">
+			<div class="elementor-widget-wrap">
+									</div>
+		</div>
+							</div>
+		</section>
+				<div class="elementor-element elementor-element-1cb33c6 elementor-widget elementor-widget-spacer" data-id="1cb33c6" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-8ff0e32 elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-heading" data-id="8ff0e32" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Veja abaixo <b><span style="color:#E05F00;text-shadow:#E67826 0px 0px 2px">R$ 299,06</span></b> em ganhos com apenas <b><span style="color:#E05F00;text-shadow:#E67826 0px 0px 2px">5 clientes</span></b> captados!</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-f6338e2 elementor-hidden-desktop elementor-widget elementor-widget-heading" data-id="f6338e2" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Veja abaixo <b><span style="color:#E05F00;text-shadow:#E67826 0px 0px 2px">R$ 299,06</span></b><br> em ganhos com apenas<br><b><span style="color:#E05F00;text-shadow:#E67826 0px 0px 2px">5 clientes</span></b> captados!</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-e8ba2d9 elementor-widget elementor-widget-spacer" data-id="e8ba2d9" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-87f3181 elementor-widget elementor-widget-image" data-id="87f3181" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img decoding="async" width="576" height="1024" src="data:image/svg+xml,%3Csvg%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20viewBox=&#x27;0%200%20576%201024&#x27;%3E%3C/svg%3E" class="attachment-full size-full wp-image-2243" alt data-lazy-srcset="https://licenciadoigreen.com/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-01-at-20.12.46-1.jpeg 576w, https://licenciadoigreen.com/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-01-at-20.12.46-1-169x300.jpeg 169w" data-lazy-sizes="(max-width: 576px) 100vw, 576px" data-lazy-src="https://licenciadoigreen.com/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-01-at-20.12.46-1.jpeg"><noscript><img decoding="async" width="576" height="1024" src="images/WhatsApp-Image-2023-05-01-at-20.12.46-1.jpeg" class="attachment-full size-full wp-image-2243" alt srcset="images/WhatsApp-Image-2023-05-01-at-20.12.46-1.jpeg 576w, images/WhatsApp-Image-2023-05-01-at-20.12.46-1-169x300.jpeg 169w" sizes="(max-width: 576px) 100vw, 576px"></noscript>															</div>
+				</div>
+				<div class="elementor-element elementor-element-d054fd1 elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-heading" data-id="d054fd1" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Saiba Mais Sobre a Oportunidade<br>de Ser um Licenciado de Sustentabilidade</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-512775e elementor-hidden-desktop elementor-widget elementor-widget-heading" data-id="512775e" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Saiba Mais Sobre a<br>Oportunidade de Ser um Licenciado de Sustentabilidade</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-a126d07 elementor-widget elementor-widget-spacer" data-id="a126d07" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-1e07a97 elementor-align-center elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-button" data-id="1e07a97" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-button-wrapper">
+			<a href="https://api.whatsapp.com/send?phone=5533999285258&text=Ol%C3%A1%20quero%20saber%20com%20ter%20uma%20renda%20extra%20com%20energia%20solar." class="elementor-button-link elementor-button elementor-size-lg elementor-animation-grow" role="button">
+						<span class="elementor-button-content-wrapper">
+							<span class="elementor-button-icon elementor-align-icon-right">
+				<i aria-hidden="true" class="far fa-play-circle"></i>			</span>
+						<span class="elementor-button-text">Acessar Explicação Completa</span>
+		</span>
+					</a>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-9ea8427 elementor-align-center elementor-hidden-desktop elementor-widget elementor-widget-button" data-id="9ea8427" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-button-wrapper">
+			<a href="https://api.whatsapp.com/send?phone=5533999285258&text=Ol%C3%A1%20quero%20saber%20com%20ter%20uma%20renda%20extra%20com%20energia%20solar." class="elementor-button-link elementor-button elementor-size-xs elementor-animation-grow" role="button">
+						<span class="elementor-button-content-wrapper">
+							<span class="elementor-button-icon elementor-align-icon-right">
+				<i aria-hidden="true" class="far fa-play-circle"></i>			</span>
+						<span class="elementor-button-text">Acessar Explicação Completa</span>
+		</span>
+					</a>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-c46e955 elementor-widget elementor-widget-spacer" data-id="c46e955" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-86f1d2b elementor-widget elementor-widget-heading" data-id="86f1d2b" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default"><a href="https://api.whatsapp.com/send?phone=5533999285258&text=Ol%C3%A1%20quero%20saber%20com%20ter%20uma%20renda%20extra%20com%20energia%20solar.">Clique Aqui e Acesse a Explicação</a></h2>		</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+							</div>
+				<div data-elementor-type="popup" data-elementor-id="2273" class="elementor elementor-2273 elementor-location-popup" data-elementor-settings="{" a11y_navigation":"yes","triggers":{"exit_intent":"yes"},"timing":[]}">
+								<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-top-section elementor-element elementor-element-c0ef0bb elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="c0ef0bb" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-9ec5b5c" data-id="9ec5b5c" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<section data-particle_enable="false" data-particle-mobile-disabled="false" class="elementor-section elementor-inner-section elementor-element elementor-element-4c4e5c8 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="4c4e5c8" data-element_type="section" data-settings="{" background_background":"classic"}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-1386bb5" data-id="1386bb5" data-element_type="column" data-settings="{" background_background":"classic"}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-98006ae elementor-widget elementor-widget-heading" data-id="98006ae" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default"><strong>Preencha corretamente</strong> os dados abaixo para acessar à <strong>Apresentação Completa</strong></h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-c6af7db elementor-widget elementor-widget-spacer" data-id="c6af7db" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-0639dfa elementor-countdown--label-block elementor-widget elementor-widget-countdown" data-id="0639dfa" data-element_type="widget" data-widget_type="countdown.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor-pro - v3.13.2 - 22-05-2023 */
+.elementor-widget-countdown .elementor-countdown-expire--message{display:none;padding:20px;text-align:center}.elementor-widget-countdown .elementor-countdown-wrapper{flex-direction:row}.elementor-widget-countdown .elementor-countdown-item{padding:20px 0;text-align:center;color:#fff}.elementor-widget-countdown .elementor-countdown-digits,.elementor-widget-countdown .elementor-countdown-label{line-height:1}.elementor-widget-countdown .elementor-countdown-digits{font-size:69px}.elementor-widget-countdown .elementor-countdown-label{font-size:19px}.elementor-widget-countdown.elementor-countdown--label-block .elementor-countdown-wrapper{display:flex;justify-content:center;margin-right:auto;margin-left:auto}.elementor-widget-countdown.elementor-countdown--label-block .elementor-countdown-digits,.elementor-widget-countdown.elementor-countdown--label-block .elementor-countdown-label{display:block}.elementor-widget-countdown.elementor-countdown--label-block .elementor-countdown-item{flex-basis:0;flex-grow:1}.elementor-widget-countdown.elementor-countdown--label-inline{text-align:center}.elementor-widget-countdown.elementor-countdown--label-inline .elementor-countdown-item{display:inline-block;padding-left:5px;padding-right:5px}</style>		<div data-evergreen-interval="300" class="elementor-countdown-wrapper" data-date>
+			<div class="elementor-countdown-item"><span class="elementor-countdown-digits elementor-countdown-minutes"></span> <span class="elementor-countdown-label">Minutos</span></div><div class="elementor-countdown-item"><span class="elementor-countdown-digits elementor-countdown-seconds"></span> <span class="elementor-countdown-label">Segundos</span></div>		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-ea2a42f elementor-widget elementor-widget-spacer" data-id="ea2a42f" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-4e75b1e elementor-widget elementor-widget-progress" data-id="4e75b1e" data-element_type="widget" data-widget_type="progress.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.13.3 - 28-05-2023 */
+.elementor-widget-progress{text-align:left}.elementor-progress-wrapper{position:relative;background-color:#eee;color:#fff;height:100%;border-radius:2px}.elementor-progress-bar{display:flex;background-color:#69727d;width:0;font-size:11px;height:30px;line-height:30px;border-radius:2px;transition:width 1s ease-in-out}.elementor-progress-text{flex-grow:1;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;padding-left:15px}.elementor-progress-percentage{padding-right:15px}.elementor-widget-progress .elementor-progress-wrapper.progress-info .elementor-progress-bar{background-color:#5bc0de}.elementor-widget-progress .elementor-progress-wrapper.progress-success .elementor-progress-bar{background-color:#5cb85c}.elementor-widget-progress .elementor-progress-wrapper.progress-warning .elementor-progress-bar{background-color:#f0ad4e}.elementor-widget-progress .elementor-progress-wrapper.progress-danger .elementor-progress-bar{background-color:#d9534f}.elementor-progress .elementor-title{display:block}@media (max-width:767px){.elementor-progress-text{padding-left:10px}}.e-con-inner .elementor-progress-wrapper,.e-con .elementor-progress-wrapper{height:auto}</style>
+		<div class="elementor-progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+			<div class="elementor-progress-bar" data-max="50">
+				<span class="elementor-progress-text"></span>
+							</div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-8e9ec65 elementor-widget elementor-widget-spacer" data-id="8e9ec65" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-0b33279 elementor-widget elementor-widget-heading" data-id="0b33279" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Acesso à Apresentação: Passo 1 de 2</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-362f956 elementor-widget elementor-widget-spacer" data-id="362f956" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-3f59c40 elementor-mobile-button-align-stretch elementor-hidden-tablet elementor-hidden-mobile elementor-button-align-stretch elementor-widget elementor-widget-form" data-id="3f59c40" data-element_type="widget" data-settings="{" button_width":"100","step_type":"number_text","step_icon_shape":"circle"}" data-widget_type="form.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor-pro - v3.13.2 - 22-05-2023 */
+.elementor-button.elementor-hidden,.elementor-hidden{display:none}.e-form__step{width:100%}.e-form__step:not(.elementor-hidden){display:flex;flex-wrap:wrap}.e-form__buttons{flex-wrap:wrap}.e-form__buttons,.e-form__buttons__wrapper{display:flex}.e-form__indicators{display:flex;justify-content:space-between;align-items:center;flex-wrap:nowrap;font-size:13px;margin-bottom:var(--e-form-steps-indicators-spacing)}.e-form__indicators__indicator{display:flex;flex-direction:column;align-items:center;justify-content:center;flex-basis:0;padding:0 var(--e-form-steps-divider-gap)}.e-form__indicators__indicator__progress{width:100%;position:relative;background-color:var(--e-form-steps-indicator-progress-background-color);border-radius:var(--e-form-steps-indicator-progress-border-radius);overflow:hidden}.e-form__indicators__indicator__progress__meter{width:var(--e-form-steps-indicator-progress-meter-width,0);height:var(--e-form-steps-indicator-progress-height);line-height:var(--e-form-steps-indicator-progress-height);padding-right:15px;border-radius:var(--e-form-steps-indicator-progress-border-radius);background-color:var(--e-form-steps-indicator-progress-color);color:var(--e-form-steps-indicator-progress-meter-color);text-align:right;transition:width .1s linear}.e-form__indicators__indicator:first-child{padding-left:0}.e-form__indicators__indicator:last-child{padding-right:0}.e-form__indicators__indicator--state-inactive{color:var(--e-form-steps-indicator-inactive-primary-color,#c2cbd2)}.e-form__indicators__indicator--state-inactive [class*=indicator--shape-]:not(.e-form__indicators__indicator--shape-none){background-color:var(--e-form-steps-indicator-inactive-secondary-color,#fff)}.e-form__indicators__indicator--state-inactive object,.e-form__indicators__indicator--state-inactive svg{fill:var(--e-form-steps-indicator-inactive-primary-color,#c2cbd2)}.e-form__indicators__indicator--state-active{color:var(--e-form-steps-indicator-active-primary-color,#39b54a);border-color:var(--e-form-steps-indicator-active-secondary-color,#fff)}.e-form__indicators__indicator--state-active [class*=indicator--shape-]:not(.e-form__indicators__indicator--shape-none){background-color:var(--e-form-steps-indicator-active-secondary-color,#fff)}.e-form__indicators__indicator--state-active object,.e-form__indicators__indicator--state-active svg{fill:var(--e-form-steps-indicator-active-primary-color,#39b54a)}.e-form__indicators__indicator--state-completed{color:var(--e-form-steps-indicator-completed-secondary-color,#fff)}.e-form__indicators__indicator--state-completed [class*=indicator--shape-]:not(.e-form__indicators__indicator--shape-none){background-color:var(--e-form-steps-indicator-completed-primary-color,#39b54a)}.e-form__indicators__indicator--state-completed .e-form__indicators__indicator__label{color:var(--e-form-steps-indicator-completed-primary-color,#39b54a)}.e-form__indicators__indicator--state-completed .e-form__indicators__indicator--shape-none{color:var(--e-form-steps-indicator-completed-primary-color,#39b54a);background-color:initial}.e-form__indicators__indicator--state-completed object,.e-form__indicators__indicator--state-completed svg{fill:var(--e-form-steps-indicator-completed-secondary-color,#fff)}.e-form__indicators__indicator__icon{width:var(--e-form-steps-indicator-padding,30px);height:var(--e-form-steps-indicator-padding,30px);font-size:var(--e-form-steps-indicator-icon-size);border-width:1px;border-style:solid;display:flex;justify-content:center;align-items:center;overflow:hidden;margin-bottom:10px}.e-form__indicators__indicator__icon img,.e-form__indicators__indicator__icon object,.e-form__indicators__indicator__icon svg{width:var(--e-form-steps-indicator-icon-size);height:auto}.e-form__indicators__indicator__icon .e-font-icon-svg{height:1em}.e-form__indicators__indicator__number{width:var(--e-form-steps-indicator-padding,30px);height:var(--e-form-steps-indicator-padding,30px);border-width:1px;border-style:solid;display:flex;justify-content:center;align-items:center;margin-bottom:10px}.e-form__indicators__indicator--shape-circle{border-radius:50%}.e-form__indicators__indicator--shape-square{border-radius:0}.e-form__indicators__indicator--shape-rounded{border-radius:5px}.e-form__indicators__indicator--shape-none{border:0}.e-form__indicators__indicator__label{text-align:center}.e-form__indicators__indicator__separator{width:100%;height:var(--e-form-steps-divider-width);background-color:#babfc5}.e-form__indicators--type-icon,.e-form__indicators--type-icon_text,.e-form__indicators--type-number,.e-form__indicators--type-number_text{align-items:flex-start}.e-form__indicators--type-icon .e-form__indicators__indicator__separator,.e-form__indicators--type-icon_text .e-form__indicators__indicator__separator,.e-form__indicators--type-number .e-form__indicators__indicator__separator,.e-form__indicators--type-number_text .e-form__indicators__indicator__separator{margin-top:calc(var(--e-form-steps-indicator-padding, 30px) / 2 - var(--e-form-steps-divider-width, 1px) / 2)}.elementor-field-type-hidden{display:none}.elementor-field-type-html{display:inline-block}.elementor-login .elementor-lost-password,.elementor-login .elementor-remember-me{font-size:.85em}.elementor-field-type-recaptcha_v3 .elementor-field-label{display:none}.elementor-field-type-recaptcha_v3 .grecaptcha-badge{z-index:1}.elementor-button .elementor-form-spinner{order:3}.elementor-form .elementor-button>span{display:flex;justify-content:center;align-items:center}.elementor-form .elementor-button .elementor-button-text{white-space:normal;flex-grow:0}.elementor-form .elementor-button svg{height:auto}.elementor-form .elementor-button .e-font-icon-svg{height:1em}.elementor-select-wrapper .select-caret-down-wrapper{position:absolute;top:50%;transform:translateY(-50%);inset-inline-end:10px;pointer-events:none;font-size:11px}.elementor-select-wrapper .select-caret-down-wrapper svg{display:unset;width:1em;aspect-ratio:unset;fill:currentColor}.elementor-select-wrapper .select-caret-down-wrapper i{font-size:19px;line-height:2}.elementor-select-wrapper.remove-before:before{content:""!important}</style>		<form class="elementor-form" method="post" name="[INSCRIÇÃO] [LICENCIADO]">
+			<input type="hidden" name="post_id" value="2273">
+			<input type="hidden" name="form_id" value="3f59c40">
+			<input type="hidden" name="referer_title" value="Início iGreen Energy Licenciado - iGreen Energy">
+
+							<input type="hidden" name="queried_id" value="1410">
+			
+			<div class="elementor-form-fields-wrapper elementor-labels-">
+								<div class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-name elementor-col-100 elementor-field-required">
+												<label for="form-field-name" class="elementor-field-label elementor-screen-only">
+								Nome							</label>
+														<input size="1" type="text" name="form_fields[name]" id="form-field-name" class="elementor-field elementor-size-sm  elementor-field-textual" placeholder="Digite seu primeiro nome" required="required" aria-required="true">
+											</div>
+								<div class="elementor-field-type-email elementor-field-group elementor-column elementor-field-group-email elementor-col-100 elementor-field-required">
+												<label for="form-field-email" class="elementor-field-label elementor-screen-only">
+								E-mail							</label>
+														<input size="1" type="email" name="form_fields[email]" id="form-field-email" class="elementor-field elementor-size-sm  elementor-field-textual" placeholder="Digite seu melhor e-mail" required="required" aria-required="true">
+											</div>
+								<div class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-phone elementor-col-100 elementor-field-required">
+												<label for="form-field-phone" class="elementor-field-label elementor-screen-only">
+								Telefone							</label>
+														<input size="1" type="text" name="form_fields[phone]" id="form-field-phone" class="elementor-field elementor-size-sm  fme-mask-input elementor-field-textual" placeholder="(DDD) + Telefone" required="required" aria-required="true" data-fme-mask="ev-tel-ddd9">
+											</div>
+								<div class="elementor-field-type-hidden elementor-field-group elementor-column elementor-field-group-fonte_de_trafego elementor-col-100">
+													<input size="1" type="hidden" name="form_fields[fonte_de_trafego]" id="form-field-fonte_de_trafego" class="elementor-field elementor-size-sm  elementor-field-textual">
+											</div>
+								<div class="elementor-field-type-hidden elementor-field-group elementor-column elementor-field-group-campanha elementor-col-100">
+													<input size="1" type="hidden" name="form_fields[campanha]" id="form-field-campanha" class="elementor-field elementor-size-sm  elementor-field-textual">
+											</div>
+								<div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-100 e-form__buttons">
+					<button type="submit" class="elementor-button elementor-size-sm">
+						<span>
+															<span class=" elementor-button-icon">
+																										</span>
+																						<span class="elementor-button-text">Continuar</span>
+													</span>
+					</button>
+				</div>
+			</div>
+		</form>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-48523cc elementor-mobile-button-align-stretch elementor-hidden-desktop elementor-button-align-stretch elementor-widget elementor-widget-form" data-id="48523cc" data-element_type="widget" data-settings="{" button_width":"100","step_type":"number_text","step_icon_shape":"circle"}" data-widget_type="form.default">
+				<div class="elementor-widget-container">
+					<form class="elementor-form" method="post" name="[INSCRIÇÃO] [LICENCIADO]">
+			<input type="hidden" name="post_id" value="2273">
+			<input type="hidden" name="form_id" value="48523cc">
+			<input type="hidden" name="referer_title" value="Início iGreen Energy Licenciado - iGreen Energy">
+
+							<input type="hidden" name="queried_id" value="1410">
+			
+			<div class="elementor-form-fields-wrapper elementor-labels-">
+								<div class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-name elementor-col-100 elementor-field-required">
+												<label for="form-field-name" class="elementor-field-label elementor-screen-only">
+								Nome							</label>
+														<input size="1" type="text" name="form_fields[name]" id="form-field-name" class="elementor-field elementor-size-xs  elementor-field-textual" placeholder="Digite seu primeiro nome" required="required" aria-required="true">
+											</div>
+								<div class="elementor-field-type-email elementor-field-group elementor-column elementor-field-group-email elementor-col-100 elementor-field-required">
+												<label for="form-field-email" class="elementor-field-label elementor-screen-only">
+								E-mail							</label>
+														<input size="1" type="email" name="form_fields[email]" id="form-field-email" class="elementor-field elementor-size-xs  elementor-field-textual" placeholder="Digite seu melhor e-mail" required="required" aria-required="true">
+											</div>
+								<div class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-phone elementor-col-100 elementor-field-required">
+												<label for="form-field-phone" class="elementor-field-label elementor-screen-only">
+								Telefone							</label>
+														<input size="1" type="text" name="form_fields[phone]" id="form-field-phone" class="elementor-field elementor-size-xs  fme-mask-input elementor-field-textual" placeholder="(DDD) + Telefone" required="required" aria-required="true" data-fme-mask="ev-tel-ddd9">
+											</div>
+								<div class="elementor-field-type-hidden elementor-field-group elementor-column elementor-field-group-fonte_de_trafego elementor-col-100">
+													<input size="1" type="hidden" name="form_fields[fonte_de_trafego]" id="form-field-fonte_de_trafego" class="elementor-field elementor-size-xs  elementor-field-textual">
+											</div>
+								<div class="elementor-field-type-hidden elementor-field-group elementor-column elementor-field-group-campanha elementor-col-100">
+													<input size="1" type="hidden" name="form_fields[campanha]" id="form-field-campanha" class="elementor-field elementor-size-xs  elementor-field-textual">
+											</div>
+								<div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-100 e-form__buttons">
+					<button type="submit" class="elementor-button elementor-size-sm">
+						<span>
+															<span class=" elementor-button-icon">
+																										</span>
+																						<span class="elementor-button-text">Continuar</span>
+													</span>
+					</button>
+				</div>
+			</div>
+		</form>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-4fa7468 elementor-widget elementor-widget-spacer" data-id="4fa7468" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-4ff9907 elementor-align-center elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="4ff9907" data-element_type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+					<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-lock"></i>						</span>
+										<span class="elementor-icon-list-text">Seus dados estão seguros com a gente.</span>
+									</li>
+						</ul>
+				</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+					</div>
+		</div>
+							</div>
+		</section>
+						</div>
+		<noscript><img height="1" width="1" style="display: none;" src="tr" alt="facebook_pixel"></noscript>
+<link rel="stylesheet" id="e-animations-css" href="css/animations.min.css" media="all">
+<script id="ht_ctc_app_js-js-extra">
+var ht_ctc_chat_var = {"number":"553131571710","pre_filled":"Ol\u00e1, assisti a apresenta\u00e7\u00e3o e quero tirar algumas d\u00favidas","dis_m":"show","dis_d":"show","css":"display: none; cursor: pointer; z-index: 99999999;","pos_d":"position: fixed; bottom: 15px; right: 15px;","pos_m":"position: fixed; bottom: 15px; right: 15px;","schedule":"no","se":"150","ani":"no-animations","url_target_d":"_blank","ga":"yes","fb":"yes","display":"no","page_display":"hide"};
+</script>
+<script type="rocketlazyloadscript" data-minify="1" src="js/app.js" id="ht_ctc_app_js-js" defer></script>
+<script type="rocketlazyloadscript" data-minify="1" src="js/jquery.mask.js" id="fme-jquery-mask-js" defer></script>
+<script type="rocketlazyloadscript" data-minify="1" src="js/elementor-mask.js" id="fme-mask-js" defer></script>
+<script type="rocketlazyloadscript" id="rocket-browser-checker-js-after">
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+</script>
+<script id="rocket-preload-links-js-extra">
+var RocketPreloadLinksConfig = {"excludeUris":"\/(.+\/)?feed\/?.+\/?|\/(?:.+\/)?embed\/|\/(index\\.php\/)?wp\\-json(\/.*|$)|\/wp-admin\/|\/logout\/|\/wp-login.php","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|php|pdf|html|htm","siteUrl":"https:\/\/licenciadoigreen.com","onHoverDelay":"100","rateThrottle":"3"};
+</script>
+<script type="rocketlazyloadscript" id="rocket-preload-links-js-after">
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+</script>
+<script type="rocketlazyloadscript" src="js/hello-frontend.min.js" id="hello-theme-frontend-js" defer></script>
+<script id="eael-general-js-extra">
+var localize = {"ajaxurl":"https:\/\/licenciadoigreen.com\/wp-admin\/admin-ajax.php","nonce":"7c32654f4f","i18n":{"added":"Added ","compare":"Compare","loading":"Loading..."},"eael_translate_text":{"required_text":"is a required field","invalid_text":"Invalid","billing_text":"Billing"},"page_permalink":"https:\/\/licenciadoigreen.com\/","cart_redirectition":"","cart_page_url":"","el_breakpoints":{"mobile":{"label":"Celular em modo retrato","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Celular em modo paisagem","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet Portrait","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Landscape","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}},"ParticleThemesData":{"default":"{\"particles\":{\"number\":{\"value\":160,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#ffffff\"},\"shape\":{\"type\":\"circle\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.5,\"random\":false,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":3,\"random\":true,\"anim\":{\"enable\":false,\"speed\":40,\"size_min\":0.1,\"sync\":false}},\"line_linked\":{\"enable\":true,\"distance\":150,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":1},\"move\":{\"enable\":true,\"speed\":6,\"direction\":\"none\",\"random\":false,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":true,\"mode\":\"repulse\"},\"onclick\":{\"enable\":true,\"mode\":\"push\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":400,\"size\":40,\"duration\":2,\"opacity\":8,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","nasa":"{\"particles\":{\"number\":{\"value\":250,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#ffffff\"},\"shape\":{\"type\":\"circle\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":1,\"random\":true,\"anim\":{\"enable\":true,\"speed\":1,\"opacity_min\":0,\"sync\":false}},\"size\":{\"value\":3,\"random\":true,\"anim\":{\"enable\":false,\"speed\":4,\"size_min\":0.3,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":150,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":1},\"move\":{\"enable\":true,\"speed\":1,\"direction\":\"none\",\"random\":true,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":600}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":true,\"mode\":\"bubble\"},\"onclick\":{\"enable\":true,\"mode\":\"repulse\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":250,\"size\":0,\"duration\":2,\"opacity\":0,\"speed\":3},\"repulse\":{\"distance\":400,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","bubble":"{\"particles\":{\"number\":{\"value\":15,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#1b1e34\"},\"shape\":{\"type\":\"polygon\",\"stroke\":{\"width\":0,\"color\":\"#000\"},\"polygon\":{\"nb_sides\":6},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.3,\"random\":true,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":50,\"random\":false,\"anim\":{\"enable\":true,\"speed\":10,\"size_min\":40,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":200,\"color\":\"#ffffff\",\"opacity\":1,\"width\":2},\"move\":{\"enable\":true,\"speed\":8,\"direction\":\"none\",\"random\":false,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":false,\"mode\":\"grab\"},\"onclick\":{\"enable\":false,\"mode\":\"push\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":400,\"size\":40,\"duration\":2,\"opacity\":8,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","snow":"{\"particles\":{\"number\":{\"value\":450,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#fff\"},\"shape\":{\"type\":\"circle\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.5,\"random\":true,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":5,\"random\":true,\"anim\":{\"enable\":false,\"speed\":40,\"size_min\":0.1,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":500,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":2},\"move\":{\"enable\":true,\"speed\":6,\"direction\":\"bottom\",\"random\":false,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":true,\"mode\":\"bubble\"},\"onclick\":{\"enable\":true,\"mode\":\"repulse\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":0.5}},\"bubble\":{\"distance\":400,\"size\":4,\"duration\":0.3,\"opacity\":1,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","nyan_cat":"{\"particles\":{\"number\":{\"value\":150,\"density\":{\"enable\":false,\"value_area\":800}},\"color\":{\"value\":\"#ffffff\"},\"shape\":{\"type\":\"star\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"http:\/\/wiki.lexisnexis.com\/academic\/images\/f\/fb\/Itunes_podcast_icon_300.jpg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.5,\"random\":false,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":4,\"random\":true,\"anim\":{\"enable\":false,\"speed\":40,\"size_min\":0.1,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":150,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":1},\"move\":{\"enable\":true,\"speed\":14,\"direction\":\"left\",\"random\":false,\"straight\":true,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":false,\"mode\":\"grab\"},\"onclick\":{\"enable\":true,\"mode\":\"repulse\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":200,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":400,\"size\":40,\"duration\":2,\"opacity\":8,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}"},"eael_login_nonce":"0a8e3edf46","eael_register_nonce":"812bd2f75f"};
+</script>
+<script type="rocketlazyloadscript" src="js/general.min.js" id="eael-general-js" defer></script>
+<script type="rocketlazyloadscript" id="mediaelement-core-js-before">
+var mejsL10n = {"language":"pt","strings":{"mejs.download-file":"Fazer download do arquivo","mejs.install-flash":"Voc\u00ea est\u00e1 usando um navegador que n\u00e3o tem Flash ativo ou instalado. Ative o plugin do Flash player ou baixe a \u00faltima vers\u00e3o em https:\/\/get.adobe.com\/flashplayer\/","mejs.fullscreen":"Tela inteira","mejs.play":"Reproduzir","mejs.pause":"Pausar","mejs.time-slider":"Tempo do slider","mejs.time-help-text":"Use as setas esquerda e direita para avan\u00e7ar um segundo. Acima e abaixo para avan\u00e7ar dez segundos.","mejs.live-broadcast":"Transmiss\u00e3o ao vivo","mejs.volume-help-text":"Use as setas para cima ou para baixo para aumentar ou diminuir o volume.","mejs.unmute":"Desativar mudo","mejs.mute":"Mudo","mejs.volume-slider":"Controle de volume","mejs.video-player":"Tocador de v\u00eddeo","mejs.audio-player":"Tocador de \u00e1udio","mejs.captions-subtitles":"Transcri\u00e7\u00f5es\/Legendas","mejs.captions-chapters":"Cap\u00edtulos","mejs.none":"Nenhum","mejs.afrikaans":"Afric\u00e2ner","mejs.albanian":"Alban\u00eas","mejs.arabic":"\u00c1rabe","mejs.belarusian":"Bielorrusso","mejs.bulgarian":"B\u00falgaro","mejs.catalan":"Catal\u00e3o","mejs.chinese":"Chin\u00eas","mejs.chinese-simplified":"Chin\u00eas (simplificado)","mejs.chinese-traditional":"Chin\u00eas (tradicional)","mejs.croatian":"Croata","mejs.czech":"Checo","mejs.danish":"Dinamarqu\u00eas","mejs.dutch":"Holand\u00eas","mejs.english":"Ingl\u00eas","mejs.estonian":"Estoniano","mejs.filipino":"Filipino","mejs.finnish":"Finland\u00eas","mejs.french":"Franc\u00eas","mejs.galician":"Galega","mejs.german":"Alem\u00e3o","mejs.greek":"Grego","mejs.haitian-creole":"Crioulo haitiano","mejs.hebrew":"Hebraico","mejs.hindi":"Hindi","mejs.hungarian":"H\u00fangaro","mejs.icelandic":"Island\u00eas","mejs.indonesian":"Indon\u00e9sio","mejs.irish":"Irland\u00eas","mejs.italian":"Italiano","mejs.japanese":"Japon\u00eas","mejs.korean":"Coreano","mejs.latvian":"Let\u00e3o","mejs.lithuanian":"Lituano","mejs.macedonian":"Maced\u00f4nio","mejs.malay":"Malaio","mejs.maltese":"Malt\u00eas","mejs.norwegian":"Noruegu\u00eas","mejs.persian":"Persa","mejs.polish":"Polon\u00eas","mejs.portuguese":"Portugu\u00eas","mejs.romanian":"Romeno","mejs.russian":"Russo","mejs.serbian":"S\u00e9rvio","mejs.slovak":"Eslovaco","mejs.slovenian":"Esloveno","mejs.spanish":"Espanhol","mejs.swahili":"Sua\u00edli","mejs.swedish":"Sueco","mejs.tagalog":"Tagalo","mejs.thai":"Tailand\u00eas","mejs.turkish":"Turco","mejs.ukrainian":"Ucraniano","mejs.vietnamese":"Vietnamita","mejs.welsh":"Gal\u00eas","mejs.yiddish":"I\u00eddiche"}};
+</script>
+<script type="rocketlazyloadscript" src="js/mediaelement-and-player.min.js" id="mediaelement-core-js" defer></script>
+<script type="rocketlazyloadscript" src="js/mediaelement-migrate.min.js" id="mediaelement-migrate-js" defer></script>
+<script id="mediaelement-js-extra">
+var _wpmejsSettings = {"pluginPath":"\/wp-includes\/js\/mediaelement\/","classPrefix":"mejs-","stretching":"responsive","audioShortcodeLibrary":"mediaelement","videoShortcodeLibrary":"mediaelement"};
+</script>
+<script type="rocketlazyloadscript" src="js/wp-mediaelement.min.js" id="wp-mediaelement-js" defer></script>
+<script type="rocketlazyloadscript" src="js/vimeo.min_1.js" id="mediaelement-vimeo-js" defer></script>
+<script type="rocketlazyloadscript" src="js/webpack-pro.runtime.min.js" id="elementor-pro-webpack-runtime-js" defer></script>
+<script type="rocketlazyloadscript" src="js/webpack.runtime.min.js" id="elementor-webpack-runtime-js" defer></script>
+<script type="rocketlazyloadscript" src="js/frontend-modules.min.js" id="elementor-frontend-modules-js" defer></script>
+<script type="rocketlazyloadscript" src="js/wp-polyfill-inert.min.js" id="wp-polyfill-inert-js" defer></script>
+<script type="rocketlazyloadscript" src="js/regenerator-runtime.min.js" id="regenerator-runtime-js" defer></script>
+<script type="rocketlazyloadscript" src="js/wp-polyfill.min.js" id="wp-polyfill-js"></script>
+<script type="rocketlazyloadscript" src="js/hooks.min.js" id="wp-hooks-js"></script>
+<script type="rocketlazyloadscript" src="js/i18n.min.js" id="wp-i18n-js"></script>
+<script type="rocketlazyloadscript" id="wp-i18n-js-after">
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+</script>
+<script type="rocketlazyloadscript" id="elementor-pro-frontend-js-before">
+var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/licenciadoigreen.com\/wp-admin\/admin-ajax.php","nonce":"683e7e4a89","urls":{"assets":"https:\/\/licenciadoigreen.com\/wp-content\/plugins\/elementor-pro\/assets\/","rest":"https:\/\/licenciadoigreen.com\/wp-json\/"},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"}},"facebook_sdk":{"lang":"pt_BR","app_id":""},"lottie":{"defaultAnimationUrl":"https:\/\/licenciadoigreen.com\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}};
+</script>
+<script type="rocketlazyloadscript" src="js/frontend.min.js" id="elementor-pro-frontend-js" defer></script>
+<script type="rocketlazyloadscript" src="js/waypoints.min.js" id="elementor-waypoints-js" defer></script>
+<script type="rocketlazyloadscript" src="js/core.min.js" id="jquery-ui-core-js" defer></script>
+<script type="rocketlazyloadscript" id="elementor-frontend-js-before">
+var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Compartilhar no Facebook","shareOnTwitter":"Compartilhar no Twitter","pinIt":"Fixar","download":"Baixar","downloadImage":"Baixar imagem","fullscreen":"Tela cheia","zoom":"Zoom","share":"Compartilhar","playVideo":"Reproduzir v\u00eddeo","previous":"Anterior","next":"Pr\u00f3ximo","close":"Fechar"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Celular em modo retrato","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Celular em modo paisagem","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet Portrait","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Landscape","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}}},"version":"3.13.4","is_static":false,"experimentalFeatures":{"e_dom_optimization":true,"e_optimized_assets_loading":true,"e_optimized_css_loading":true,"a11y_improvements":true,"additional_custom_breakpoints":true,"theme_builder_v2":true,"hello-theme-header-footer":true,"landing-pages":true,"page-transitions":true,"notes":true,"loop":true,"form-submissions":true,"e_scroll_snap":true},"urls":{"assets":"https:\/\/licenciadoigreen.com\/wp-content\/plugins\/elementor\/assets\/"},"swiperClass":"swiper-container","settings":{"page":[],"editorPreferences":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description","hello_header_logo_type":"title","hello_footer_logo_type":"logo"},"post":{"id":1410,"title":"In%C3%ADcio%20iGreen%20Energy%20Licenciado%20-%20iGreen%20Energy","excerpt":"","featuredImage":false}};
+</script>
+<script type="rocketlazyloadscript" src="js/frontend.min_1.js" id="elementor-frontend-js" defer></script>
+<script type="rocketlazyloadscript" src="js/elements-handlers.min.js" id="pro-elements-handlers-js" defer></script>
+<script>window.lazyLoadOptions={elements_selector:"img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="js/lazyload.min.js"></script>	<script>class RocketElementorAnimation{constructor(){this.deviceMode=document.createElement("span"),this.deviceMode.id="elementor-device-mode",this.deviceMode.setAttribute("class","elementor-screen-only"),document.body.appendChild(this.deviceMode)}_detectAnimations(){let t=getComputedStyle(this.deviceMode,":after").content.replace(/"/g,"");this.animationSettingKeys=this._listAnimationSettingsKeys(t),document.querySelectorAll(".elementor-invisible[data-settings]").forEach(t=>{const e=t.getBoundingClientRect();if(e.bottom>=0&&e.top<=window.innerHeight)try{this._animateElement(t)}catch(t){}})}_animateElement(t){const e=JSON.parse(t.dataset.settings),i=e._animation_delay||e.animation_delay||0,n=e[this.animationSettingKeys.find(t=>e[t])];if("none"===n)return void t.classList.remove("elementor-invisible");t.classList.remove(n),this.currentAnimation&&t.classList.remove(this.currentAnimation),this.currentAnimation=n;let s=setTimeout(()=>{t.classList.remove("elementor-invisible"),t.classList.add("animated",n),this._removeAnimationSettings(t,e)},i);window.addEventListener("rocket-startLoading",function(){clearTimeout(s)})}_listAnimationSettingsKeys(t="mobile"){const e=[""];switch(t){case"mobile":e.unshift("_mobile");case"tablet":e.unshift("_tablet");case"desktop":e.unshift("_desktop")}const i=[];return["animation","_animation"].forEach(t=>{e.forEach(e=>{i.push(t+e)})}),i}_removeAnimationSettings(t,e){this._listAnimationSettingsKeys().forEach(t=>delete e[t]),t.dataset.settings=JSON.stringify(e)}static run(){const t=new RocketElementorAnimation;requestAnimationFrame(t._detectAnimations.bind(t))}}document.addEventListener("DOMContentLoaded",RocketElementorAnimation.run);</script>
+
+
+<span id="elementor-device-mode" class="elementor-screen-only"></span></body></html>
